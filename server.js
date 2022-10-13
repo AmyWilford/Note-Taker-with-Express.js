@@ -11,13 +11,16 @@ app.use('/api', api);
 app.use(express.static('public'));
 
 // GET route for home page ->static
-app.get('*', (req,res) =>
+app.get('/', (req,res) =>
 res.sendFile(path.join(__dirname, './public/index.html'))
 );
 
 // GET route for notes page ->static
 app.get('/notes', (req, res)=>
 res.sendFile(path.join(__dirname, './public/notes.html'))
+);
+app.get('*', (req,res) =>
+res.sendFile(path.join(__dirname, './public/index.html'))
 );
 
 
