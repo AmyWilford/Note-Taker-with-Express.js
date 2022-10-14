@@ -5,7 +5,7 @@ const uniqid = require('uniqid')
 
 
 notes.get('/', (req, res)=>{
-    // let db = require('../db/db.json')
+    let db = require('../db/db.json')
     console.info(`${req.method} request received. Notes loaded.`);
     fs.readFile('db/db.json', 'utf8', (err, data)=>{
         if (data) {
@@ -18,40 +18,38 @@ notes.get('/', (req, res)=>{
 
 notes.post('/', (req, res)=>{
     db = require('../db/db.json')
-    const id = uniqid();
     const {title, text} = req.body;
 
-    if (title && text && id) {
+    if (title && text) {
         const newNote = {
             title, 
             text,
-            id
+            id: uniqid()
         };
-
         db.push(newNote);
 
-        fs.writeFileSync('./db/db.json', JSON.stringify(db), (err) =>{
-            if(!err) {
+        fs.writeFile('./db/db.json', JSON.stringify(db), () =>{
                 console.info(`${req.method} request received. Your new note is entered`);
                 const response =  {
                 status: 'Success. Note Added', 
                 body: newNote,
                 };
                 res.status(200).json(response);
-
-            } else {
-                res.status(404).json('Error encountered. Could not add your note');
-        }
-    });       
+        } 
+    );       
+}
+else {
+    res.status(404).json('Error encountered. Could not add your note');
 }}
 )
 notes.delete('/:id', (req, res) =>{
-    let db = require('../db/db.json')
-    console.log("req params", req.params.id)
-    db = db.filter(({ id }) => id !== req.params.id);
-    console.log(db);
-//     fs.writeFileSync('./db/db.json', JSON.stringify(db), (err) =>{
-//     res.status(200).json('Note Deleted')
+    res.send('Delete request called');
+    // let db = require('../db/db.json')
+    // console.log("req params", req.params.id)
+    // db = db.filter(({ id }) => id !== req.params.id);
+    // console.log(db);
+    // fs.writeFileSync('./db/db.json', JSON.stringify(db), () =>{
+    // res.status(200).json('Note Deleted')
 // });
 });
 
