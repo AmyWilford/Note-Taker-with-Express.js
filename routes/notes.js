@@ -5,7 +5,7 @@ const uniqid = require('uniqid')
 
 
 notes.get('/', (req, res)=>{
-    let db = require('../db/db.json')
+    // let db = require('../db/db.json')
     console.info(`${req.method} request received. Notes loaded.`);
     fs.readFile('db/db.json', 'utf8', (err, data)=>{
         if (data) {
@@ -42,15 +42,18 @@ else {
     res.status(404).json('Error encountered. Could not add your note');
 }}
 )
+
 notes.delete('/:id', (req, res) =>{
-    res.send('Delete request called');
-    // let db = require('../db/db.json')
-    // console.log("req params", req.params.id)
-    // db = db.filter(({ id }) => id !== req.params.id);
-    // console.log(db);
-    // fs.writeFileSync('./db/db.json', JSON.stringify(db), () =>{
-    // res.status(200).json('Note Deleted')
-// });
+    let dbList = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+    let noteId = (req.params.id).toString();
+    dbList = dbList.filter(note => {
+        return note.id !=noteId;
+    })
+
+    fs.writeFileSync('./db/db.json', JSON.stringify(dbList));
+    res.json(dbList)
+    console.log(`${req.method} received. Note deleted`);
+
 });
 
 module.exports = notes;
