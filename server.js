@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// this is constructing the URL route
+// Construct URL route
 app.use('/api', api);
 app.use(express.static('public'));
 
@@ -22,6 +22,7 @@ app.get('/notes', (req, res)=>
 res.sendFile(path.join(__dirname, './public/notes.html'))
 );
 
+// GET wildcard route to redirect to home page
 app.get('*', (req,res) =>
 res.sendFile(path.join(__dirname, './public/index.html'))
 );

@@ -1,7 +1,7 @@
 const notes = require('express').Router();
 const fs = require('fs');
 const uniqid = require('uniqid')
-// let db = require('../db/db.json')
+let db = require('../db/db.json')
 
 
 notes.get('/', (req, res)=>{
@@ -17,7 +17,7 @@ notes.get('/', (req, res)=>{
 });
 
 notes.post('/', (req, res)=>{
-    db = require('../db/db.json')
+    // db = require('../db/db.json')
     const {title, text} = req.body;
 
     if (title && text) {
@@ -46,12 +46,12 @@ else {
 notes.delete('/:id', (req, res) =>{
     let dbList = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
     let noteId = (req.params.id).toString();
-    dbList = dbList.filter(note => {
-        return note.id !=noteId;
+    db = dbList.filter(note => {
+        return note.id !==noteId;
     })
 
-    fs.writeFileSync('./db/db.json', JSON.stringify(dbList));
-    res.json(dbList)
+    fs.writeFileSync('./db/db.json', JSON.stringify(db));
+    res.json(db)
     console.log(`${req.method} received. Note deleted`);
 
 });
