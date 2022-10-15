@@ -51,7 +51,7 @@ notes.delete('/:id', (req, res) =>{
     })
 
     fs.writeFileSync('./db/db.json', JSON.stringify(db));
-    res.json(db)
+    res.status(200).json(db)
     console.log(`${req.method} received. Note deleted`);
 
 });
