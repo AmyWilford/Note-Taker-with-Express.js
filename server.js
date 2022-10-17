@@ -1,10 +1,11 @@
+// Import required application dependencies and file connections
 const express = require('express');
 const path = require('path');
 const api = require('./routes/index')
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-
+// Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -27,6 +28,7 @@ app.get('*', (req,res) =>
 res.sendFile(path.join(__dirname, './public/index.html'))
 );
 
+// Start server and establish listening at defined PORT
 app.listen(PORT, ()=> 
     console.log(`App listening at http://localhost:${PORT}`)
 );
