@@ -40,7 +40,7 @@ Click on any note from your notes list to view its details. Once you've dealt wi
 
 ## Deployment:
 
-[View the deployed site on Heroku]()
+[View the deployed site on Heroku](https://notetaker-application-alw.herokuapp.com/notes)
 
 ## Demo:
 <img src="public/assets/images/NoteTaker - Demo.png" style = "width: 400px" alt="image of deployed site">
